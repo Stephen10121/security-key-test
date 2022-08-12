@@ -15,30 +15,30 @@ export class Equation {
         this.history = [{ currentAnswer: this.answer, modifier: "none", givenArgument: startingNumber, newAnswer: this.answer, nthModification: 0 }];
     }
 
-    pushToHistory(modifier: string, givenArgument: number) {
-        this.history.push({ currentAnswer: this.answer, modifier, givenArgument, newAnswer: this.answer+givenArgument, nthModification: this.history.length });
+    pushToHistory(modifier: string, givenArgument: number, newAnswer: number) {
+        this.history.push({ currentAnswer: this.answer, modifier, givenArgument, newAnswer, nthModification: this.history.length });
     }
 
     addNumber(numberToAdd: number) {
-        this.pushToHistory("add", numberToAdd);
+        this.pushToHistory("add", numberToAdd, this.answer+numberToAdd);
         this.answer += numberToAdd;
         return this.answer;
     }
 
     subtractNumber(numberToSubtract: number) {
-        this.pushToHistory("subtract", numberToSubtract);
+        this.pushToHistory("subtract", numberToSubtract, this.answer-numberToSubtract);
         this.answer -= numberToSubtract;
         return this.answer;
     }
 
     multiplyNumber(numberToMultiply: number) {
-        this.pushToHistory("multiply", numberToMultiply);
+        this.pushToHistory("multiply", numberToMultiply, this.answer*numberToMultiply);
         this.answer *= numberToMultiply;
         return this.answer;
     }
 
     divideNumber(numberToDivide: number) {
-        this.pushToHistory("divide", numberToDivide);
+        this.pushToHistory("divide", numberToDivide, this.answer/numberToDivide);
         this.answer /= numberToDivide;
         return this.answer;
     }
