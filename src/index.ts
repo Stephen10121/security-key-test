@@ -4,7 +4,6 @@ print("Typescript compile test and stuff.");
 
 const equation = new Equation(19.5);
 const cool = document.querySelector("#cool");
-const modifierToSymbol = {add: "+",subtract: "-", multiply:"*",divide:"/"}
 
 equation.addNumber(13);
 equation.subtractNumber(23);    
@@ -17,12 +16,12 @@ equation.subtractNumber(23);
 const history = equation.getHistory();
 
 const appender = history.map((value, _index) => {
-    return `<li>Old answer: ${value.currentAnswer}. Operation: ${value.modifier}. Argument: ${value.givenArgument}. New answer: ${value.newAnswer}.</li>`;
+    return `<li>Old answer: ${value.currentAnswer}. Operation: ${JSON.stringify(value.modifier)}. Argument: ${value.givenArgument}. New answer: ${value.newAnswer}.</li>`;
 }).join("");
 
 const appender2 = history.map((value, _index) => {
-    if (value.modifier !== "none") {
-        return `<div class="module"><p><span>${value.nthModification}: </span>${value.currentAnswer}${modifierToSymbol[value.modifier]}${value.givenArgument}=${value.newAnswer}</p></div>`;
+    if (value.modifier.code !== "none") {
+        return `<div class="module"><p><span>${value.nthModification}: </span>${value.currentAnswer}${value.modifier.key}${value.givenArgument}=${value.newAnswer}</p></div>`;
     }
     return `<div class="module"><p><span>${value.nthModification}: </span>${value.currentAnswer}</p></div>`;
 }).join("");

@@ -1,6 +1,11 @@
+type Modifier = {
+    key: string;
+    code: string;
+}
+
 type HistoryInfo = {
     currentAnswer: number;
-    modifier: string;
+    modifier: Modifier;
     givenArgument: number;
     newAnswer: number;
     nthModification: number;
@@ -12,33 +17,33 @@ export class Equation {
 
     constructor(startingNumber: number) {
         this.answer = startingNumber;
-        this.history = [{ currentAnswer: this.answer, modifier: "none", givenArgument: startingNumber, newAnswer: this.answer, nthModification: 0 }];
+        this.history = [{ currentAnswer: this.answer, modifier: {key: "none", code: "none"}, givenArgument: startingNumber, newAnswer: this.answer, nthModification: 0 }];
     }
 
-    pushToHistory(modifier: string, givenArgument: number, newAnswer: number) {
+    pushToHistory(modifier: Modifier, givenArgument: number, newAnswer: number) {
         this.history.push({ currentAnswer: this.answer, modifier, givenArgument, newAnswer, nthModification: this.history.length });
     }
 
     addNumber(numberToAdd: number) {
-        this.pushToHistory("add", numberToAdd, this.answer+numberToAdd);
+        this.pushToHistory({code: "add", key: "+"}, numberToAdd, this.answer+numberToAdd);
         this.answer += numberToAdd;
         return this.answer;
     }
 
     subtractNumber(numberToSubtract: number) {
-        this.pushToHistory("subtract", numberToSubtract, this.answer-numberToSubtract);
+        this.pushToHistory({code: "subtract", key: "-"}, numberToSubtract, this.answer-numberToSubtract);
         this.answer -= numberToSubtract;
         return this.answer;
     }
 
     multiplyNumber(numberToMultiply: number) {
-        this.pushToHistory("multiply", numberToMultiply, this.answer*numberToMultiply);
+        this.pushToHistory({code: "multiply", key: "*"}, numberToMultiply, this.answer*numberToMultiply);
         this.answer *= numberToMultiply;
         return this.answer;
     }
 
     divideNumber(numberToDivide: number) {
-        this.pushToHistory("divide", numberToDivide, this.answer/numberToDivide);
+        this.pushToHistory({code:"divide", key: "/"}, numberToDivide, this.answer/numberToDivide);
         this.answer /= numberToDivide;
         return this.answer;
     }
